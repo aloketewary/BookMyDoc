@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "320217884362",
+    "project_id": "bookmydocapp",
+    "storage_bucket": "bookmydocapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320217884362:android:7adaff6457b9ef56503633",
+        "android_client_info": {
+          "package_name": "app.bookmydoc.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320217884362-ar6o19croqe61ku6d9p7ckrp3in8s912.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuJOH3MiBG-Bxl6o9EZ0Jaq6PO_Yxcq9Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320217884362-ar6o19croqe61ku6d9p7ckrp3in8s912.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
