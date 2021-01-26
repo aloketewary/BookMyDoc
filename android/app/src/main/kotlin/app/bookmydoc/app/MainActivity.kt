@@ -1,4 +1,4 @@
-package com.example.doctor_booking_app
+package app.bookmydoc.app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
