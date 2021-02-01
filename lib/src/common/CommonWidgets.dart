@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class CommonWidgets {
   static Widget loadingIndicator(BuildContext context, bool isDark,
       {String title = ''}) {
-    Color accentColor = Theme.of(context).accentColor;
+    var accentColor = Theme.of(context).accentColor;
     return Center(
       child: Stack(
         children: <Widget>[

@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 class DashboardDoctorMiniCard extends StatelessWidget {
   final Function onTapCallback;
 
+  // ignore: sort_constructors_first
   DashboardDoctorMiniCard({this.onTapCallback});
 
   @override
@@ -15,7 +16,7 @@ class DashboardDoctorMiniCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final accentColor = Theme.of(context).accentColor;
     // final ThemeProvider themeChange = Provider.of<ThemeProvider>(context);
-    bool isDark = false; //themeChange.isDark(context);
+    var isDark = false; //themeChange.isDark(context);
     final _size = MediaQuery.of(context).size;
     return Padding(
         padding: EdgeInsets.symmetric(
@@ -206,7 +207,7 @@ class DashboardDoctorMiniCard extends StatelessWidget {
                         ))))));
   }
 
-  _gotoDoctorDetails(BuildContext context) {
+  void _gotoDoctorDetails(BuildContext context) {
     Route route = MaterialPageRoute(
         builder: (context) => DoctorsDetails(
             // routeData: widget.routeData,

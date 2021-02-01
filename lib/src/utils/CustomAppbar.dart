@@ -12,6 +12,7 @@ class BmdAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
+  // ignore: sort_constructors_first
   BmdAppBar(
       {@required this.title,
       @required this.leading,
@@ -23,10 +24,10 @@ class BmdAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     // final ThemeProvider themeChange = Provider.of<ThemeProvider>(context);
-    bool isDark = false; //themeChange.isDark(context);
+    var isDark = false; //themeChange.isDark(context);
     final _size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
-    return new Stack(children: <Widget>[
+    return Stack(children: <Widget>[
       ClipPath(
         // clipper: BezierClipper(altClip: true),
         child: Container(
