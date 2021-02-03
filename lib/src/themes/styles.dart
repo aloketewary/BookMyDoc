@@ -52,8 +52,8 @@ abstract class Styles {
 
   static final LIGHT_THEME = ThemeData(
     brightness: Brightness.light,
-    primaryColor: AppColors.red,
-    primaryColorDark: RED_DARK,
+    primaryColor: AppColors.blue,
+    primaryColorDark: AppColors.darkBlue,
     typography: Typography.material2018(),
     backgroundColor: BODY,
     accentColor: BLUE_DARK,

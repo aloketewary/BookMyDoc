@@ -1,0 +1,20 @@
+{
+  "app_name": "BloodDo",
+  "AN_APP_FOR_EMERGENCY": "An App For Your Emergency",
+  "BLOOD_DONATION_MOTO_FEEL": "Blood donors report feeling a sense of great satisfaction after making their blood donation. Why? Because helping others in need just feels good. Donate blood today to help those in need.",
+  "GET_STARTED": "Get started",
+  "WELCOME_FIRST_THING_FIRST" : "First things first,",
+  "WELCOME_CONTACT_ACCESS_MESSAGE": "We need your contacts to running all the features!",
+  "BTN_REQUEST_ACCESS": "Request Access",
+  "WELCOME_LOCATION_ACCESS_MESSAGE": "We need Location access for searching!",
+  "TEXT_MOBILE_NUMBER":  "Mobile Number",
+  "TEXT_MOBILE_NUMBER_HINT": "eg. 9090XXXX90",
+  "TEXT_VALIDATOR_REQUIRED": "Required",
+  "TEXT_MOBILE_NUMBER_VALIDATOR_MSG": "Enter valid mobile number",
+  "BTN_SIGN_IN": "get otp",
+  "TEXT_OTP_NUMBER": "Enter OTP",
+  "TEXT_OTP_NUMBER_VALIDATOR_MSG": "Enter valid OTP",
+  "BTN_VERIFY_OTP": "verify",
+  "BTN_VERIFY_OTP_CANCEL": "resend OTP",
+  "LANGUAGE": "Language"
+}

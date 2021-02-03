@@ -1,0 +1,20 @@
+{
+  "app_name": "BloodDo hindi",
+  "AN_APP_FOR_EMERGENCY": "अपने आपातकाल के लिए एक ऐप",
+  "BLOOD_DONATION_MOTO_FEEL": "रक्तदाता रक्तदान करने के बाद बड़ी संतुष्टि की भावना महसूस करते हैं। क्यों? क्योंकि जरूरत में दूसरों की मदद करना ही अच्छा लगता है। आज जरूरतमंद लोगों की मदद के लिए रक्त दान करें।",
+  "GET_STARTED": "आरंभ करें",
+  "WELCOME_FIRST_THING_FIRST" : "पहली बात पहले,",
+  "WELCOME_CONTACT_ACCESS_MESSAGE": "सभी सुविधाओं को चलाने के लिए हमें आपके संपर्कों की आवश्यकता है!",
+  "BTN_REQUEST_ACCESS": "पहुँचने का अनुरोध करें",
+  "WELCOME_LOCATION_ACCESS_MESSAGE": "हमें खोज के लिए स्थान की आवश्यकता है!",
+  "TEXT_MOBILE_NUMBER":  "मोबाइल नंबर",
+  "TEXT_MOBILE_NUMBER_HINT": "जैसे। 9090XXXX90",
+  "TEXT_VALIDATOR_REQUIRED": "अपेक्षित",
+  "TEXT_MOBILE_NUMBER_VALIDATOR_MSG": "मान्य मोबाइल नंबर दर्ज करें",
+  "BTN_SIGN_IN": "get otp",
+  "TEXT_OTP_NUMBER": "Enter OTP",
+  "TEXT_OTP_NUMBER_VALIDATOR_MSG": "Enter valid OTP",
+  "BTN_VERIFY_OTP": "verify",
+  "BTN_VERIFY_OTP_CANCEL": "resend OTP",
+  "LANGUAGE": "भाषा"
+}

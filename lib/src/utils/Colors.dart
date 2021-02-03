@@ -27,13 +27,19 @@ class AppColors {
   static const Color darkseeBlue = Color(0xff63c4cf);
   static const Color lightseeBlue = Color(0xffb9e6fc);
 
+  static const Color blue = Color(0xff1a54f8);
+  static const Color blue2 = Color(0xff0024f1);
+  static const Color darkBlue = Color(0xff001aa8);
+  static const Color lightBlue = Color(0xff5c93fa);
+  static const Color lightBlue2 = Color(0xffff7c54);
+
   static const Color brighter = Color(0xff3754aa);
   static const Color Darker = Color(0xffffffff);
   static const Color black = Color(0xff040405);
   static const Color lightblack = Color(0xff3E404D);
   static const Color lightGrey = Color(0xffDFE7DD);
-  static const Color darkBlue = Color(0xff13165A);
-  static const Color lightBlue = Color(0xff203387);
+  // static const Color darkBlue = Color(0xff13165A);
+  // static const Color lightBlue = Color(0xff203387);
 
   static const Color darkCard = Color(0xff46494c);
   static const Color darkerCard = Color(0xff242423);
