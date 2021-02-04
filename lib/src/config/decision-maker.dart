@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor_booking_app/src/common/CommonWidgets.dart';
+import 'package:doctor_booking_app/src/dashboard/AdminDashboard.dart';
 import 'package:doctor_booking_app/src/database/notifier/users_notifier.dart';
+import 'package:doctor_booking_app/src/login/getting_started.dart';
 import 'package:doctor_booking_app/src/login/login_screen.dart';
 import 'package:doctor_booking_app/src/login/onboarding_page.dart';
 import 'package:doctor_booking_app/src/model/user-details.dart';
@@ -26,10 +29,9 @@ class DecisionMaker extends StatefulWidget {
 class _DecisionMakerState extends State<DecisionMaker>
     with WidgetsBindingObserver {
   AuthStatus authStatus = AuthStatus.notDetermined;
-  String _phoneNumber = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String _userId = '';
-  String _dialCode = '';
+  String _email = '';
 
   UserDetails get _userDetails => widget.user;
 
@@ -47,7 +49,7 @@ class _DecisionMakerState extends State<DecisionMaker>
       if (user != null) {
         setState(() {
           _userId = user.uid.toString();
-          _phoneNumber = user?.phoneNumber;
+          _email = user?.email;
         });
       }
       authStatus =
@@ -112,7 +114,7 @@ class _DecisionMakerState extends State<DecisionMaker>
         return SharedPreferencesHelper.getOnBoardingStatus(prefs)
             ? LoginScreenPage(
                 auth: widget.auth,
-                loginCallback: (String dialCode) => loginCallback(dialCode),
+                loginCallback: (String uid) => loginCallback(uid),
               )
             : OnBoarding(
                 auth: widget.auth,
@@ -120,21 +122,65 @@ class _DecisionMakerState extends State<DecisionMaker>
                 prefs: prefs,
               );
         break;
+      case AuthStatus.loggedIn:
+        return AdminDashboard();
+      case AuthStatus.firstTimeLoggedIn:
+        return _checkUserExistAndRouteAccordingly(context);
       case AuthStatus.notDetermined:
       default:
         return CommonWidgets.loadingIndicator(context, isDark);
     }
   }
 
-  void loginCallback(String dialCode) {
-    print(dialCode);
+  void loginCallback(String uid) {
     widget.auth.getCurrentUser().then((user) {
       setState(() {
         _userId = user.uid.toString();
-        _phoneNumber = user?.phoneNumber;
-        _dialCode = dialCode;
+        _email = user?.email;
       });
       checkFirstTimeUser();
     });
+  }
+
+  Widget _checkUserExistAndRouteAccordingly(BuildContext context) {
+    final _usersNotifier = Provider.of<UsersNotifier>(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
+    var isDark = themeChange.isDark(context);
+    return FutureBuilder(
+        future: _usersNotifier.getSingleUserCollection(_userId),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasData && snapshot.data.docs.isNotEmpty) {
+            DocumentSnapshot _documentSnapshot =
+                snapshot.data.docs.elementAt(0);
+            var user = UserDetails.fromMap(
+                _documentSnapshot.data(), _documentSnapshot.id);
+            // SharedPreferencesHelper.setLoggedUserData(user, prefs);
+            // SharedPreferencesHelper.setFirstTimeUser(false, prefs);
+            // return new WillPopScope(
+            //   onWillPop: onWillPop,
+            //   child: new Home(
+            //     userDetails: user,
+            //     auth: widget.auth,
+            //     userId: _userId,
+            //     phoneNumber: _phoneNumber,
+            //     logoutCallback: () => logoutCallback(userDetailsProvider),
+            //     userUpdateCallback: userUpdateCallback,
+            //     dialCode: _dialCode,
+            //   ),
+            return AdminDashboard();
+            // )
+          } else if (snapshot.hasData && snapshot.data.docs.isEmpty) {
+            return WillPopScope(
+                onWillPop: () => null,
+                child: GettingStarted(
+                  userId: _userId,
+                  email: _email,
+                  checkFirstTimeUserCallback: checkFirstTimeUser,
+                  prefs: prefs,
+                ));
+          } else {
+            return CommonWidgets.loadingIndicator(context, isDark);
+          }
+        });
   }
 }

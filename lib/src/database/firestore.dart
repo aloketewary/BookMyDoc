@@ -50,9 +50,9 @@ class FireStoreApi {
     return _collectionReference.doc(city).snapshots();
   }
 
-  Future<QuerySnapshot> getSingleUserCollection(String number) {
+  Future<QuerySnapshot> getSingleUserCollection(String uid) {
     return _collectionReference
-        .where('mobile', isEqualTo: number)
+        .where('uid', isEqualTo: uid)
         .get();
   }
 

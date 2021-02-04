@@ -24,8 +24,8 @@ class UsersNotifier extends ChangeNotifier {
     return _api.streamSearchUserCollection(city);
   }
 
-  Future<QuerySnapshot> getSingleUserCollection(String number) {
-    return _api.getSingleUserCollection(number);
+  Future<QuerySnapshot> getSingleUserCollection(String uid) {
+    return _api.getSingleUserCollection(uid);
   }
 
   Future<UserDetails> updateUserDetails(UserDetails userDetails) async {

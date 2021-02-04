@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:doctor_booking_app/src/common/CommonWidgets.dart';
+import 'package:doctor_booking_app/src/common/loader_hud.dart';
 import 'package:doctor_booking_app/src/service/base/base-auth.dart';
 import 'package:doctor_booking_app/src/themes/theme_provider.dart';
 import 'package:doctor_booking_app/src/utils/Colors.dart';
@@ -22,6 +23,9 @@ class LoginScreenPage extends StatefulWidget {
 class _LoginScreenPageState extends State<LoginScreenPage> {
   final _formKey = GlobalKey<FormState>();
   var isPasswordVisible = false;
+  final TextEditingController _emailCtrl = TextEditingController();
+  final TextEditingController _pwdCtrl = TextEditingController();
+  var isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,9 @@ class _LoginScreenPageState extends State<LoginScreenPage> {
     var _size = MediaQuery.of(context).size;
     var _textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      body: SingleChildScrollView(
+        body: LoaderHUD(
+      inAsyncCall: isLoading,
+      child: SingleChildScrollView(
           child: Column(
         children: [
           ClipPath(
@@ -107,7 +113,7 @@ class _LoginScreenPageState extends State<LoginScreenPage> {
           _generateForm(context)
         ],
       )),
-    );
+    ));
   }
 
   Widget _generateForm(BuildContext context) {
@@ -124,6 +130,7 @@ class _LoginScreenPageState extends State<LoginScreenPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     TextFormField(
+                      controller: _emailCtrl,
                       decoration: InputDecoration(
                           labelText: 'Email',
                           prefixIcon: Icon(MdiIcons.emailOutline),
@@ -145,6 +152,7 @@ class _LoginScreenPageState extends State<LoginScreenPage> {
                       padding: EdgeInsets.only(top: 8),
                     ),
                     TextFormField(
+                      controller: _pwdCtrl,
                       decoration: InputDecoration(
                           hintText: 'Password',
                           prefixIcon: Icon(MdiIcons.lockOutline),
@@ -173,9 +181,8 @@ class _LoginScreenPageState extends State<LoginScreenPage> {
                           width: _size.width,
                           child: Text(
                             'Forget password?',
-                            style: _textTheme.subtitle1.copyWith(
-                              color: _theme.primaryColor
-                            ),
+                            style: _textTheme.subtitle1
+                                .copyWith(color: _theme.primaryColor),
                             textAlign: TextAlign.right,
                           ),
                         ),
@@ -193,12 +200,22 @@ class _LoginScreenPageState extends State<LoginScreenPage> {
                             // the form is invalid.
                             if (_formKey.currentState.validate()) {
                               // Process data.
+                              isLoading = true;
+                              widget.auth
+                                  .signIn(_emailCtrl.text, _pwdCtrl.text)
+                                  .then((value) {
+                                isLoading = false;
+                                widget.loginCallback(value);
+                              }).catchError((onError) {
+                                isLoading = false;
+                                print(onError);
+                              });
                             }
                           },
                           child: Text(
                             'Log in',
-                            style:
-                                _textTheme.subtitle1.copyWith(color: Colors.white),
+                            style: _textTheme.subtitle1
+                                .copyWith(color: Colors.white),
                           ),
                         ),
                       ),
