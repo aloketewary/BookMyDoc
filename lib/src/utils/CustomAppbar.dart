@@ -1,4 +1,4 @@
-import 'package:doctor_booking_app/src/common/CommonWidgets.dart';
+import 'package:doctor_booking_app/src/common/common_widgets.dart';
 import 'package:doctor_booking_app/src/utils/Colors.dart';
 import 'package:flutter/material.dart';
 

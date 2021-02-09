@@ -1,36 +1,29 @@
-import 'package:doctor_booking_app/src/common/CommonWidgets.dart';
-import 'package:doctor_booking_app/src/doctors/DoctorsDetails.dart';
+import 'package:doctor_booking_app/src/common/common_widgets.dart';
 import 'package:doctor_booking_app/src/utils/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
-class DashboardDoctorMiniCard extends StatelessWidget {
-  final Function onTapCallback;
-
-  // ignore: sort_constructors_first
-  DashboardDoctorMiniCard({this.onTapCallback});
-
+class DashboardAppointmentMiniCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final accentColor = Theme.of(context).accentColor;
     // final ThemeProvider themeChange = Provider.of<ThemeProvider>(context);
-    var isDark = false; //themeChange.isDark(context);
+    bool isDark = false; //themeChange.isDark(context);
     final _size = MediaQuery.of(context).size;
     return Padding(
         padding: EdgeInsets.symmetric(
           vertical: 4,
         ),
         child: Container(
-            // height: 180,
-            // width: 140,
-            margin: EdgeInsets.only(right: 0),
+            height: 180,
+            width: 140,
+            margin: EdgeInsets.only(right: 10),
             child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
-                elevation: 3,
+                elevation: 1,
                 child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(25)),
                     child: Container(
@@ -85,9 +78,9 @@ class DashboardDoctorMiniCard extends StatelessWidget {
                             InkWell(
                               onTap: () {
                                 HapticFeedback.lightImpact();
-                                _gotoDoctorDetails(context);
+                                // onTapCallback();
                               },
-                              splashColor: accentColor.withOpacity(0.0),
+                              splashColor: accentColor.withOpacity(0.3),
                               enableFeedback: true,
                               child: Container(
                                 padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
@@ -98,82 +91,46 @@ class DashboardDoctorMiniCard extends StatelessWidget {
                                   children: <Widget>[
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Dr. Arindam Chatterjee",
-                                              style: textTheme.headline6
-                                                  .copyWith(
-                                                      color: accentColor
-                                                          .withOpacity(0.9),
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            Text(
-                                              "Test Address, Test Data, Tests",
-                                              style: textTheme.subtitle2
-                                                  .copyWith(
-                                                      color: accentColor
-                                                          .withOpacity(0.9),
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ],
-                                        ),
                                         Padding(
-                                          padding: EdgeInsets.all(5),
+                                          padding: EdgeInsets.only(top: 5),
                                           child: CircleAvatar(
-                                            backgroundImage: NetworkImage(
-                                                'https://i.pravatar.cc/150?img=23'),
-                                            backgroundColor: Colors.transparent,
-                                            // child: Text("C",
-                                            //     style: textTheme.headline4
-                                            //         .copyWith(
-                                            //         color: Colors.white)),
-                                            // backgroundColor: accentColor,
+                                            child: Text("C",
+                                                style: textTheme.headline4
+                                                    .copyWith(
+                                                        color: Colors.white)),
+                                            backgroundColor: accentColor,
                                             radius: 25,
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.all(5),
-                                          child: Text(
-                                            "Available for your need",
-                                            style: textTheme.subtitle2.copyWith(
-                                                color: Colors.deepOrange
-                                                    .withOpacity(0.9),
-                                                fontWeight: FontWeight.bold),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            IconButton(
-                                                icon: Icon(Icons.call),
-                                                onPressed: () {}),
-                                            IconButton(
-                                                icon: Icon(Icons.sms),
-                                                onPressed: () {})
-                                          ],
-                                        )
-                                      ],
+                                    Text(
+                                      "Arindam Test",
+                                      style: textTheme.headline6.copyWith(
+                                          color: accentColor.withOpacity(0.9),
+                                          fontWeight: FontWeight.bold),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      "Test Address",
+                                      style: textTheme.subtitle2.copyWith(
+                                          color: accentColor.withOpacity(0.9),
+                                          fontWeight: FontWeight.bold),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    RaisedButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        "DELETE",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2,
+                                      ),
                                     )
                                     // CircularPercentIndicator(
                                     //   radius: 80.0,
@@ -205,13 +162,5 @@ class DashboardDoctorMiniCard extends StatelessWidget {
                             ),
                           ],
                         ))))));
-  }
-
-  void _gotoDoctorDetails(BuildContext context) {
-    Route route = MaterialPageRoute(
-        builder: (context) => DoctorsDetails(
-            // routeData: widget.routeData,
-            ));
-    Navigator.push(context, route);
   }
 }

@@ -30,4 +30,9 @@ class SharedPreferencesHelper {
   static Future<bool> setOnBoardingStatus(bool value, SharedPreferences prefs) {
     return prefs.setBool(_onBoardingStatus, value);
   }
+
+
+  static void setLoggedUserData(UserDetails user, SharedPreferences prefs) {
+    prefs.setString(_loggedUserKey, json.encode(user));
+  }
 }

@@ -1,5 +1,5 @@
 import 'package:doctor_booking_app/src/config/decision-maker.dart';
-import 'package:doctor_booking_app/src/dashboard/AdminDashboard.dart';
+import 'package:doctor_booking_app/src/dashboard/admin_dashboard.dart';
 import 'package:doctor_booking_app/src/database/notifier/users_notifier.dart';
 import 'package:doctor_booking_app/src/database/users_data_api.dart';
 import 'package:doctor_booking_app/src/model/user-details.dart';

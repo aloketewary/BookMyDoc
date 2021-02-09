@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doctor_booking_app/src/common/CommonWidgets.dart';
-import 'package:doctor_booking_app/src/dashboard/AdminDashboard.dart';
+import 'package:doctor_booking_app/src/common/common_widgets.dart';
+import 'package:doctor_booking_app/src/dashboard/admin_dashboard.dart';
 import 'package:doctor_booking_app/src/database/notifier/users_notifier.dart';
 import 'package:doctor_booking_app/src/login/getting_started.dart';
 import 'package:doctor_booking_app/src/login/login_screen.dart';
@@ -33,13 +33,14 @@ class _DecisionMakerState extends State<DecisionMaker>
   String _userId = '';
   String _email = '';
 
-  UserDetails get _userDetails => widget.user;
+  UserDetails _userDetails;
 
   SharedPreferences get prefs => widget.prefs;
 
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+    _userDetails = widget.user;
     super.initState();
     _init();
   }
@@ -66,6 +67,7 @@ class _DecisionMakerState extends State<DecisionMaker>
 
   void checkFirstTimeUser() {
     setState(() {
+      _userDetails = SharedPreferencesHelper.getLoggedUserData(prefs);
       authStatus = _userDetails != null
           ? AuthStatus.loggedIn
           : AuthStatus.firstTimeLoggedIn;

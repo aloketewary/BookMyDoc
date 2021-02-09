@@ -1,7 +1,7 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
-import 'package:doctor_booking_app/src/dashboard/appointments/DashBoardAppointmentMiniCard.dart';
-import 'package:doctor_booking_app/src/dashboard/doctors/DashboardDoctorMiniCard.dart';
-import 'package:doctor_booking_app/src/doctors/DoctorsDetails.dart';
+import 'package:doctor_booking_app/src/dashboard/appointments/dashboard_appointment_mini_card.dart';
+import 'package:doctor_booking_app/src/dashboard/doctors/dashboard_doctor_mini_card.dart';
+import 'package:doctor_booking_app/src/doctors/doctors_details.dart';
 import 'package:doctor_booking_app/src/utils/Colors.dart';
 import 'package:doctor_booking_app/src/utils/CustomAppbar.dart';
 import 'package:flutter/material.dart';
