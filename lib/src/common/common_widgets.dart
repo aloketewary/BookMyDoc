@@ -1,3 +1,4 @@
+import 'package:doctor_booking_app/src/themes/styles.dart';
 import 'package:doctor_booking_app/src/utils/Colors.dart';
 import 'package:doctor_booking_app/src/utils/QuadClipper.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 class CommonWidgets {
   static Widget loadingIndicator(BuildContext context, bool isDark,
       {String title = ''}) {
-    Color accentColor = Theme.of(context).accentColor;
+    var accentColor = Theme.of(context).accentColor;
     return Center(
       child: Stack(
         children: <Widget>[
@@ -270,4 +271,143 @@ class CommonWidgets {
       ),
     );
   }
+
+  static Widget inputFormField(TextEditingController tECtrl, String labelText,
+      Function validatorFunc, bool isDark,
+      {IconData prefixIcon,
+      TextInputType keyboardType = TextInputType.text,
+      TextCapitalization textCapitalization = TextCapitalization.sentences}) {
+    return Padding(
+        padding: EdgeInsets.only(top: 12),
+        child: TextFormField(
+          controller: tECtrl,
+          decoration: InputDecoration(
+            labelText: labelText,
+            prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: getBorderColor(isDark)),
+            ),
+          ),
+          keyboardType: keyboardType,
+          textCapitalization: textCapitalization,
+          validator: validatorFunc,
+        ));
+  }
+
+  static Widget textBoxFormField(TextEditingController tECtrl, String labelText,
+      Function validatorFunc, bool isDark,
+      {IconData prefixIcon,
+      TextInputType keyboardType = TextInputType.multiline,
+      TextCapitalization textCapitalization = TextCapitalization.sentences}) {
+    return Padding(
+        padding: EdgeInsets.only(top: 12),
+        child: TextFormField(
+          controller: tECtrl,
+          minLines: 1,
+          maxLines: 4,
+          decoration: InputDecoration(
+            labelText: labelText,
+            prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: getBorderColor(isDark)),
+            ),
+          ),
+          keyboardType: keyboardType,
+          textCapitalization: textCapitalization,
+          validator: validatorFunc,
+        ));
+  }
+
+  static Color getBorderColor(bool isDark) {
+    return isDark ? Colors.grey.shade600 : Colors.black54;
+  }
+
+  static Future<Null> selectDate(BuildContext context,
+      TextEditingController _dateController, Function pickedValue,
+      {DateTime selectedDate, bool isDark, ThemeData themeData}) async {
+    final picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        initialDatePickerMode: DatePickerMode.day,
+        firstDate: DateTime(1920),
+        lastDate: DateTime.now(),
+        builder: (BuildContext context, Widget child) {
+          return Theme(
+            data: isDark
+                ? ThemeData.dark().copyWith(
+                    colorScheme: ColorScheme.dark(
+                      primary: themeData.primaryColor,
+                      onPrimary: Colors.white,
+                      surface: themeData.primaryColorDark,
+                      onSurface: themeData.accentColor,
+                    ),
+                    dialogBackgroundColor: themeData.primaryColorLight,
+                  )
+                : ThemeData.light().copyWith(
+                    colorScheme: ColorScheme.light(
+                      primary: themeData.primaryColor,
+                      onPrimary: Colors.white,
+                      surface: themeData.primaryColorDark,
+                      onSurface: Styles.nearlyBlack,
+                    ),
+                    dialogBackgroundColor: Styles.nearlyWhite,
+                  ),
+            child: child,
+          );
+        });
+    if (picked != null) {
+      pickedValue(picked);
+    }
+  }
+
+// Future<Null> _selectTime(BuildContext context) async {
+//   final picked = await showTimePicker(
+//     context: context,
+//     initialTime: selectedTime,
+//   );
+//   if (picked != null) {
+//     setState(() {
+//       selectedTime = picked;
+//       _hour = selectedTime.hour.toString();
+//       _minute = selectedTime.minute.toString();
+//       _time = _hour + ' : ' + _minute;
+//       _timeController.text = _time;
+//       _timeController.text = formatDate(
+//           DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
+//           [hh, ':', nn, ' ', am]).toString();
+//     });
+//   }
+// }
+
+  static Widget dateInputFormField(TextEditingController tECtrl,
+      String labelText, Function validatorFunc, bool isDark, Function onTapped,
+      {IconData prefixIcon,
+      TextInputType keyboardType = TextInputType.text,
+      TextCapitalization textCapitalization = TextCapitalization.sentences}) {
+    return Padding(
+        padding: EdgeInsets.only(top: 12),
+        child: TextFormField(
+          controller: tECtrl,
+          onTap: onTapped,
+          focusNode: AlwaysDisabledFocusNode(),
+          decoration: InputDecoration(
+            labelText: labelText,
+            prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: getBorderColor(isDark)),
+            ),
+          ),
+          keyboardType: keyboardType,
+          textCapitalization: textCapitalization,
+          validator: validatorFunc,
+        ));
+  }
+}
+
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }

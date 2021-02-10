@@ -1,6 +1,9 @@
-import 'package:doctor_booking_app/src/common/CommonWidgets.dart';
+import 'package:doctor_booking_app/src/common/common_widgets.dart';
+import 'package:doctor_booking_app/src/themes/styles.dart';
+import 'package:doctor_booking_app/src/themes/theme_provider.dart';
 import 'package:doctor_booking_app/src/utils/Colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BmdAppBar extends StatelessWidget implements PreferredSizeWidget {
   final dynamic title;
@@ -12,6 +15,7 @@ class BmdAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
+  // ignore: sort_constructors_first
   BmdAppBar(
       {@required this.title,
       @required this.leading,
@@ -22,27 +26,28 @@ class BmdAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final ThemeProvider themeChange = Provider.of<ThemeProvider>(context);
-    bool isDark = false; //themeChange.isDark(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
+    var isDark = themeChange.isDark(context);
     final _size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
-    return new Stack(children: <Widget>[
+    var _themeData = Theme.of(context);
+    return Stack(children: <Widget>[
       ClipPath(
         // clipper: BezierClipper(altClip: true),
         child: Container(
           // color: Styles.RED,//Color.fromRGBO(255, 91, 53, 1),
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[
-                BmdColors.lightGrey,
-                BmdColors.lightGrey,
-                // BmdColors.body
-              ],
-            ),
+            // gradient: LinearGradient(
+            //   begin: Alignment.topLeft,
+            //   end: Alignment.bottomRight,
+            //   // colors: <Color>[
+            //   //   // _themeData.primaryColor,
+            //   //   // _themeData.primaryColor,
+            //   //   // BmdColors.body
+            //   // ],
+            // ),
           ),
-          height: 90.0,
+          height: preferredSize.height,
         ),
       ),
       Positioned(
