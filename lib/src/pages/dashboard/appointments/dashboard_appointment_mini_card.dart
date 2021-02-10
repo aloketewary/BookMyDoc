@@ -1,15 +1,18 @@
 import 'package:doctor_booking_app/src/common/common_widgets.dart';
+import 'package:doctor_booking_app/src/themes/theme_provider.dart';
 import 'package:doctor_booking_app/src/utils/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class DashboardAppointmentMiniCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final accentColor = Theme.of(context).accentColor;
-    // final ThemeProvider themeChange = Provider.of<ThemeProvider>(context);
-    bool isDark = false; //themeChange.isDark(context);
+    final primaryColor = Theme.of(context).primaryColor;
+    final themeChange = Provider.of<ThemeProvider>(context);
+    var isDark = themeChange.isDark(context);
     final _size = MediaQuery.of(context).size;
     return Padding(
         padding: EdgeInsets.symmetric(
@@ -99,37 +102,44 @@ class DashboardAppointmentMiniCard extends StatelessWidget {
                                         Padding(
                                           padding: EdgeInsets.only(top: 5),
                                           child: CircleAvatar(
-                                            child: Text("C",
+                                            child: Text('C',
                                                 style: textTheme.headline4
                                                     .copyWith(
-                                                        color: Colors.white)),
-                                            backgroundColor: accentColor,
+                                                        color: isDark
+                                                            ? primaryColor
+                                                            : Colors.white)),
+                                            backgroundColor: isDark ? accentColor : primaryColor,
                                             radius: 25,
                                           ),
                                         ),
                                       ],
                                     ),
                                     Text(
-                                      "Arindam Test",
-                                      style: textTheme.headline6.copyWith(
-                                          color: accentColor.withOpacity(0.9),
+                                      'Arindam Test',
+                                      style: textTheme.subtitle1.copyWith(
+                                          color: isDark ? accentColor.withOpacity(0.9) : primaryColor,
                                           fontWeight: FontWeight.bold),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
-                                      "Test Address",
+                                      'Test Address',
                                       style: textTheme.subtitle2.copyWith(
-                                          color: accentColor.withOpacity(0.9),
+                                          color: isDark ? accentColor.withOpacity(0.9) : primaryColor,
                                           fontWeight: FontWeight.bold),
                                       overflow: TextOverflow.ellipsis,
                                     ),
-                                    RaisedButton(
+                                    ElevatedButton(
                                       onPressed: () {},
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.resolveWith(
+                                                  (states) => isDark
+                                                      ? primaryColor
+                                                      : accentColor.withOpacity(0.9))),
                                       child: Text(
-                                        "DELETE",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText2,
+                                        'DELETE',
+                                        style:
+                                            Theme.of(context).textTheme.button,
                                       ),
                                     )
                                     // CircularPercentIndicator(

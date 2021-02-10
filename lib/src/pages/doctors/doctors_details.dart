@@ -1,4 +1,4 @@
-import 'package:doctor_booking_app/src/utils/CustomAppbar.dart';
+import 'package:doctor_booking_app/src/utils/custom_appbar.dart';
 import 'package:doctor_booking_app/src/utils/locations.dart' as locations;
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

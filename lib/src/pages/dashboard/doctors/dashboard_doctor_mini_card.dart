@@ -1,9 +1,11 @@
 import 'package:doctor_booking_app/src/common/common_widgets.dart';
-import 'package:doctor_booking_app/src/doctors/doctors_details.dart';
+import 'package:doctor_booking_app/src/pages/doctors/doctors_details.dart';
+import 'package:doctor_booking_app/src/themes/theme_provider.dart';
 import 'package:doctor_booking_app/src/utils/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class DashboardDoctorMiniCard extends StatelessWidget {
   final Function onTapCallback;
@@ -15,8 +17,8 @@ class DashboardDoctorMiniCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final accentColor = Theme.of(context).accentColor;
-    // final ThemeProvider themeChange = Provider.of<ThemeProvider>(context);
-    var isDark = false; //themeChange.isDark(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
+    var isDark = themeChange.isDark(context);
     final _size = MediaQuery.of(context).size;
     return Padding(
         padding: EdgeInsets.symmetric(

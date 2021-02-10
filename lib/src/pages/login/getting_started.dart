@@ -5,8 +5,6 @@ import 'package:doctor_booking_app/src/enums/gender_enum.dart';
 import 'package:doctor_booking_app/src/model/user-details.dart';
 import 'package:doctor_booking_app/src/service/shared/shared-prefernces-helper.dart';
 import 'package:doctor_booking_app/src/themes/styles.dart';
-
-// import 'package:date_format/date_format.dart';
 import 'package:doctor_booking_app/src/themes/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

@@ -1,4 +1,4 @@
-import 'package:doctor_booking_app/src/login/intro_widget.dart';
+import 'package:doctor_booking_app/src/pages/login/intro_widget.dart';
 import 'package:doctor_booking_app/src/service/base/base-auth.dart';
 import 'package:doctor_booking_app/src/service/shared/shared-prefernces-helper.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class OnBoarding extends StatefulWidget {
 
   final BaseAuth auth;
   final VoidCallback onBoardingCompleteCallback;
-  SharedPreferences prefs;
+  final SharedPreferences prefs;
 
   @override
   _OnBoardingState createState() => _OnBoardingState();

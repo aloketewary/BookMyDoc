@@ -1,16 +1,12 @@
 import 'package:doctor_booking_app/src/config/decision-maker.dart';
-import 'package:doctor_booking_app/src/dashboard/admin_dashboard.dart';
 import 'package:doctor_booking_app/src/database/notifier/users_notifier.dart';
 import 'package:doctor_booking_app/src/database/users_data_api.dart';
 import 'package:doctor_booking_app/src/model/user-details.dart';
 import 'package:doctor_booking_app/src/service/auth/book-my-doc-auth.dart';
 import 'package:doctor_booking_app/src/service/provider/user-details-provider.dart';
 import 'package:doctor_booking_app/src/themes/styles.dart';
-import 'package:doctor_booking_app/src/themes/theme.dart';
 import 'package:doctor_booking_app/src/themes/theme_provider.dart';
-import 'package:doctor_booking_app/src/utils/Colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

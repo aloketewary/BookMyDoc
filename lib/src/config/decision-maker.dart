@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor_booking_app/src/common/common_widgets.dart';
-import 'package:doctor_booking_app/src/dashboard/admin_dashboard.dart';
 import 'package:doctor_booking_app/src/database/notifier/users_notifier.dart';
-import 'package:doctor_booking_app/src/login/getting_started.dart';
-import 'package:doctor_booking_app/src/login/login_screen.dart';
-import 'package:doctor_booking_app/src/login/onboarding_page.dart';
+import 'package:doctor_booking_app/src/model/router_data.dart';
 import 'package:doctor_booking_app/src/model/user-details.dart';
+import 'package:doctor_booking_app/src/pages/home/home.dart';
+import 'package:doctor_booking_app/src/pages/login/getting_started.dart';
+import 'package:doctor_booking_app/src/pages/login/login_screen.dart';
+import 'package:doctor_booking_app/src/pages/login/onboarding_page.dart';
 import 'package:doctor_booking_app/src/service/auth/auth-status.dart';
 import 'package:doctor_booking_app/src/service/base/base-auth.dart';
 import 'package:doctor_booking_app/src/service/provider/user-details-provider.dart';
@@ -111,6 +112,7 @@ class _DecisionMakerState extends State<DecisionMaker>
     var accentColor = Theme.of(context).accentColor;
     final themeChange = Provider.of<ThemeProvider>(context);
     var isDark = themeChange.isDark(context);
+    var routerData = RouterData(userDetails: _userDetails);
     switch (authStatus) {
       case AuthStatus.notLoggedIn:
         return SharedPreferencesHelper.getOnBoardingStatus(prefs)
@@ -125,7 +127,10 @@ class _DecisionMakerState extends State<DecisionMaker>
               );
         break;
       case AuthStatus.loggedIn:
-        return AdminDashboard();
+        return BmdHome(
+          routerData: routerData,
+          prefs: prefs,
+        );
       case AuthStatus.firstTimeLoggedIn:
         return _checkUserExistAndRouteAccordingly(context);
       case AuthStatus.notDetermined:
@@ -148,6 +153,7 @@ class _DecisionMakerState extends State<DecisionMaker>
     final _usersNotifier = Provider.of<UsersNotifier>(context);
     final themeChange = Provider.of<ThemeProvider>(context);
     var isDark = themeChange.isDark(context);
+    var routerData = RouterData(userDetails: _userDetails);
     return FutureBuilder(
         future: _usersNotifier.getSingleUserCollection(_userId),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -169,7 +175,10 @@ class _DecisionMakerState extends State<DecisionMaker>
             //     userUpdateCallback: userUpdateCallback,
             //     dialCode: _dialCode,
             //   ),
-            return AdminDashboard();
+            return BmdHome(
+              routerData: routerData,
+              prefs: prefs,
+            );
             // )
           } else if (snapshot.hasData && snapshot.data.docs.isEmpty) {
             return WillPopScope(
