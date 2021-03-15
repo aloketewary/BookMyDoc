@@ -65,8 +65,14 @@ class _OnBoardingState extends State<OnBoarding> {
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
+    screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
+    screenHeight = MediaQuery
+        .of(context)
+        .size
+        .height;
     final introWidgetsList = <Widget>[
       IntroWidget(
         screenWidth: screenWidth,
@@ -75,7 +81,8 @@ class _OnBoardingState extends State<OnBoarding> {
         type: 'DONATE',
         startGradientColor: Colors.orange,
         endGradientColor: Colors.lightGreen,
-        subText: 'Donate to individuals in one step, by directly connected with them from your contacts.'.toUpperCase(),
+        subText: 'Donate to individuals in one step, by directly connected with them from your contacts.'
+            .toUpperCase(),
         icon: MdiIcons.charity,
       ),
       IntroWidget(
@@ -86,7 +93,8 @@ class _OnBoardingState extends State<OnBoarding> {
           startGradientColor: Colors.green,
           endGradientColor: Colors.blue,
           icon: MdiIcons.accountSearchOutline,
-          subText: 'search right from the menu, search based on your location and selected bllod group.'.toUpperCase()),
+          subText: 'search right from the menu, search based on your location and selected bllod group.'
+              .toUpperCase()),
       IntroWidget(
           screenWidth: screenWidth,
           screenHeight: screenHeight,
@@ -95,7 +103,8 @@ class _OnBoardingState extends State<OnBoarding> {
           startGradientColor: Colors.orange,
           endGradientColor: Colors.red,
           icon: MdiIcons.charity,
-          subText: 'be a superhero by saving other lives, you can save life of 4 or more people by donating blood.'.toUpperCase()),
+          subText: 'be a superhero by saving other lives, you can save life of 4 or more people by donating blood.'
+              .toUpperCase()),
       IntroWidget(
           screenWidth: screenWidth,
           screenHeight: screenHeight,
@@ -104,7 +113,8 @@ class _OnBoardingState extends State<OnBoarding> {
           startGradientColor: Colors.blue,
           endGradientColor: Colors.green,
           icon: MdiIcons.charity,
-          subText: 'Are you ready to join the noble cause of donating blood. Get Started by tapping the button.'.toUpperCase()),
+          subText: 'Are you ready to join the noble cause of donating blood. Get Started by tapping the button.'
+              .toUpperCase()),
     ];
     return Scaffold(
       body: SafeArea(
@@ -151,7 +161,8 @@ class _OnBoardingState extends State<OnBoarding> {
                       margin: EdgeInsets.only(right: 16, bottom: 16),
                       child: FloatingActionButton(
                         onPressed: () {
-                          SharedPreferencesHelper.setOnBoardingStatus(true, prefs);
+                          SharedPreferencesHelper.setOnBoardingStatus(
+                              true, prefs);
                           widget.onBoardingCompleteCallback();
                         },
 //                        shape: BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(26))),
@@ -191,7 +202,7 @@ class _OnBoardingState extends State<OnBoarding> {
       height: isActive ? 12 : 8,
       width: isActive ? 12 : 8,
       decoration: BoxDecoration(
-          color: isActive ? Colors.orange  : Colors.grey ,
+          color: isActive ? Colors.orange : Colors.grey,
           borderRadius: BorderRadius.all(Radius.circular(12))),
     );
   }

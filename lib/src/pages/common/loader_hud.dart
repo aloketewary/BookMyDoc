@@ -17,7 +17,8 @@ class LoaderHUD extends StatelessWidget {
   final bool dismissible;
   final bool inAsyncCall;
   final double opacity;
-  final Widget progressIndicator = const Center(child: CircularProgressIndicator());
+  final Widget progressIndicator =
+      const Center(child: CircularProgressIndicator());
 
   @override
   Widget build(BuildContext context) {

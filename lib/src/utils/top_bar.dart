@@ -4,7 +4,7 @@ import 'package:doctor_booking_app/src/utils/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BmdAppBar extends StatelessWidget implements PreferredSizeWidget {
+class TopBar extends StatelessWidget implements PreferredSizeWidget {
   final dynamic title;
   final IconData leading;
   final dynamic action;
@@ -15,13 +15,13 @@ class BmdAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Size preferredSize;
 
   // ignore: sort_constructors_first
-  BmdAppBar(
+  TopBar(
       {@required this.title,
       @required this.leading,
       this.onPressed,
       this.onActionTapped,
       this.action})
-      : preferredSize = Size.fromHeight(90.0);
+      : preferredSize = Size.fromHeight(60.0);
 
   @override
   Widget build(BuildContext context) {

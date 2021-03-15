@@ -1,4 +1,6 @@
 import 'package:doctor_booking_app/src/config/decision-maker.dart';
+import 'package:doctor_booking_app/src/database/doctors_data_api.dart';
+import 'package:doctor_booking_app/src/database/notifier/doctors_notifier.dart';
 import 'package:doctor_booking_app/src/database/notifier/users_notifier.dart';
 import 'package:doctor_booking_app/src/database/users_data_api.dart';
 import 'package:doctor_booking_app/src/model/user-details.dart';
@@ -25,6 +27,7 @@ class _BookMyDocState extends State<BookMyDoc> {
   final UserDetailsProvider _userDetailsProvider = UserDetailsProvider();
   ThemeProvider themeChangeProvider = ThemeProvider();
   final UsersDataApi _usersDataApi = UsersDataApi();
+  final DoctorsDataApi _doctorsDataApi = DoctorsDataApi();
 
   @override
   void initState() {
@@ -44,8 +47,7 @@ class _BookMyDocState extends State<BookMyDoc> {
         providers: [
           //     ChangeNotifierProvider(create: (_) => EventsNotifier(_eventsApi)),
           ChangeNotifierProvider(create: (_) => UsersNotifier(_usersDataApi)),
-          // ChangeNotifierProvider(
-          // create: (_) => BloodRequestNotifier(_bloodRequestApi)),
+          ChangeNotifierProvider(create: (_) => DoctorsNotifier(_doctorsDataApi)),
           // ChangeNotifierProvider(
           // create: (_) => DonorsHistoryNotifier(_donorsHistoryApi)),
           ChangeNotifierProvider(create: (_) => themeChangeProvider),
@@ -60,7 +62,7 @@ class _BookMyDocState extends State<BookMyDoc> {
               theme: Styles.lightThemeData(
                   themeChangeProvider.themeTypes, context),
               darkTheme:
-              Styles.darkThemeData(themeChangeProvider.themeTypes, context),
+                  Styles.darkThemeData(themeChangeProvider.themeTypes, context),
               home: DecisionMaker(
                 auth: BookMyDocAuth(),
                 user: userData,

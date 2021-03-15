@@ -1,5 +1,5 @@
-import 'package:doctor_booking_app/src/common/common_widgets.dart';
-import 'package:doctor_booking_app/src/common/loader_hud.dart';
+import 'package:doctor_booking_app/src/pages/common/common_widgets.dart';
+import 'package:doctor_booking_app/src/pages/common/loader_hud.dart';
 import 'package:doctor_booking_app/src/database/notifier/users_notifier.dart';
 import 'package:doctor_booking_app/src/enums/gender_enum.dart';
 import 'package:doctor_booking_app/src/model/user-details.dart';

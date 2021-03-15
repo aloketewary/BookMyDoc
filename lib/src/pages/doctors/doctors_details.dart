@@ -1,16 +1,27 @@
+import 'dart:math';
+
+import 'package:doctor_booking_app/src/model/doctor-details.dart';
+import 'package:doctor_booking_app/src/themes/theme_provider.dart';
 import 'package:doctor_booking_app/src/utils/custom_appbar.dart';
 import 'package:doctor_booking_app/src/utils/locations.dart' as locations;
+import 'package:doctor_booking_app/src/utils/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
 class DoctorsDetails extends StatefulWidget {
+  DoctorsDetails({this.doctorDetails});
+
+  final DoctorDetails doctorDetails;
+
   @override
   _DoctorsDetailsState createState() => _DoctorsDetailsState();
 }
 
 class _DoctorsDetailsState extends State<DoctorsDetails> {
   final Map<String, Marker> _markers = {};
+  DoctorDetails get doctorDetails => widget.doctorDetails;
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final googleOffices = await locations.getGoogleOffices();
@@ -32,22 +43,24 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final themeData = Theme.of(context);
+    final themeChange = Provider.of<ThemeProvider>(context);
+    var isDark = themeChange.isDark(context);
     return Scaffold(
-      appBar: BmdAppBar(
+      appBar: TopBar(
         leading: Icons.arrow_back,
-        title: '',
+        title: 'Detail of ${doctorDetails.name}',
         onPressed: () => Navigator.of(context).pop(),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {  },
+        onPressed: () {},
         label: Text('Book Appointment'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            buildAvatarRow(textTheme),
+            buildAvatarRow(themeData, isDark),
             Row(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,8 +84,8 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
                         ),
                       )),
                   title: Text(
-                    '4.5',
-                    style: textTheme.headline6,
+                    doctorDetails.rating,
+                    style: themeData.textTheme.headline6,
                   ),
                   subtitle: Text('Ratings'),
                 )),
@@ -94,10 +107,10 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
                         ),
                       )),
                   title: Text(
-                    '5 years',
-                    style: textTheme.headline6,
+                    getCalculatedExp(),
+                    style: themeData.textTheme.headline6,
                   ),
-                  subtitle: Text('Experience'),
+                  subtitle: Text('Exp'),
                 )),
               ],
             ),
@@ -127,12 +140,12 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
                                     padding: EdgeInsets.only(bottom: 8),
                                     child: Text(
                                       'Clinic Fees',
-                                      style: textTheme.caption,
+                                      style: themeData.textTheme.caption,
                                     ),
                                   ),
                                   Text(
-                                    '₹250',
-                                    style: textTheme.headline6,
+                                    '₹${doctorDetails.fees}',
+                                    style: themeData.textTheme.headline6,
                                   )
                                 ])),
                             Expanded(
@@ -145,7 +158,7 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
                                     padding: EdgeInsets.only(bottom: 8),
                                     child: Text(
                                       'Availability',
-                                      style: textTheme.caption,
+                                      style: themeData.textTheme.caption,
                                     ),
                                   ),
                                   Row(
@@ -155,8 +168,8 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
                                         size: 18,
                                       ),
                                       Text(
-                                        '10:30am - 2:30pm',
-                                        style: textTheme.subtitle1,
+                                        '${doctorDetails.timingStart} - ${doctorDetails.timingEnd}',
+                                        style: themeData.textTheme.subtitle1,
                                       ),
                                     ],
                                   )
@@ -254,7 +267,7 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
     );
   }
 
-  Row buildAvatarRow(TextTheme textTheme) {
+  Row buildAvatarRow(ThemeData themeData, bool isDark) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -263,7 +276,7 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
         Padding(
           padding: EdgeInsets.only(left: 10, right: 10),
           child: CircleAvatar(
-            backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=23'),
+            backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=${Random().nextInt(20) + 10}'),
             backgroundColor: Colors.transparent,
             radius: 50,
           ),
@@ -274,19 +287,19 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildColumnText(
-                "Dr. Stephen Strange",
-                textTheme.headline6.copyWith(
-                    color: Colors.black, fontWeight: FontWeight.bold)),
+                'Dr. ${doctorDetails.name}',
+                themeData.textTheme.headline6.copyWith(
+                    color: isDark ? themeData.accentColor : themeData.primaryColor, fontWeight: FontWeight.bold)),
             buildColumnText(
-                "Neuro Surgen Speciality",
-                textTheme.subtitle1.copyWith(
-                  color: Colors.black45,
+                doctorDetails.speciality,
+                themeData.textTheme.subtitle1.copyWith(
+                  color: isDark ? themeData.accentColor : themeData.primaryColor,
                   fontWeight: FontWeight.normal,
                 )),
             buildColumnText(
-                "Sterling Multi facility Hospital",
-                textTheme.subtitle1.copyWith(
-                    color: Colors.black45, fontWeight: FontWeight.normal)),
+                doctorDetails.dispensaryId != null ? 'Sterling Multi facility Hospital':'Sterling Multi facility Hospital',
+                themeData.textTheme.subtitle1.copyWith(
+                    color: isDark ? themeData.accentColor : themeData.primaryColor, fontWeight: FontWeight.normal)),
           ],
         ),
       ],
@@ -301,5 +314,10 @@ class _DoctorsDetailsState extends State<DoctorsDetails> {
           style: textStyle,
           overflow: TextOverflow.ellipsis,
         ));
+  }
+
+  String getCalculatedExp() {
+    var difference = DateTime.now().difference(doctorDetails.practiceStartedFrom);
+    return (difference.inDays.toDouble() / 365).toStringAsFixed(2);
   }
 }

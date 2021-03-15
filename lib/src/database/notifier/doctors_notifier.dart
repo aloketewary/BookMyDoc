@@ -1,20 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctor_booking_app/src/database/doctors_data_api.dart';
 import 'package:doctor_booking_app/src/database/users_data_api.dart';
 import 'package:doctor_booking_app/src/model/user-details.dart';
 import 'package:flutter/material.dart';
 
-class UsersNotifier extends ChangeNotifier {
-  UsersNotifier(UsersDataApi api) {
+class DoctorsNotifier extends ChangeNotifier {
+  DoctorsNotifier(DoctorsDataApi api) {
     _api = api;
   }
 
-  UsersDataApi _api;
+  DoctorsDataApi _api;
 
-  Future<QuerySnapshot> streamUsers(List<String> numbers) {
-    return _api.streamUserCollection(numbers);
+  Future<QuerySnapshot> streamDoctors(String shopId)  {
+    return _api.streamDoctorCollection(shopId);
   }
 
-  Future<UserDetails> createNewUser(String id, UserDetails user) async {
+  Future<UserDetails> createNewDoctors(String id, UserDetails user) async {
     Map data = user.toJson();
     await _api.addUsersDocument(id, data);
     return UserDetails.fromMap(data, id);
@@ -25,11 +26,11 @@ class UsersNotifier extends ChangeNotifier {
     return _api.streamSearchUserCollection(city);
   }
 
-  Future<QuerySnapshot> getSingleUserCollection(String uid) {
+  Future<QuerySnapshot> getSingleDoctorsCollection(String uid) {
     return _api.getSingleUserCollection(uid);
   }
 
-  Future<UserDetails> updateUserDetails(UserDetails userDetails) async {
+  Future<UserDetails> updateDoctorsDetails(UserDetails userDetails) async {
     Map data = userDetails.toJson();
     await _api.updateDocument(userDetails.id, data);
     return UserDetails.fromMap(data, userDetails.id);
@@ -41,7 +42,7 @@ class UsersNotifier extends ChangeNotifier {
     return UserDetails.fromMap(data, event.id);
   }
 
-  Future<UserDetails> getSingleUserDetails(String number) async {
+  Future<UserDetails> getSingleDoctorsDetails(String number) async {
     var document = await _api.getSingleUserCollection(number);
     if (document != null && document.docs.isNotEmpty) {
       DocumentSnapshot _documentSnapshot = document.docs.elementAt(0);

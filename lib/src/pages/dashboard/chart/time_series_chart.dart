@@ -4,8 +4,6 @@ import 'package:doctor_booking_app/src/pages/dashboard/chart/time_series.dart';
 import 'package:flutter/material.dart';
 
 class TimeSeriesBar extends StatelessWidget {
-
-
   TimeSeriesBar(this.seriesList, {this.animate});
 
   /// Creates a [TimeSeriesChart] with sample data and no transition.
@@ -37,5 +35,4 @@ class TimeSeriesBar extends StatelessWidget {
       behaviors: [charts.SelectNearest(), charts.DomainHighlighter()],
     );
   }
-
 }

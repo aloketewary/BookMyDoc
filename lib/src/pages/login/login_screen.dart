@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:doctor_booking_app/src/common/common_widgets.dart';
-import 'package:doctor_booking_app/src/common/loader_hud.dart';
+import 'package:doctor_booking_app/src/pages/common/common_widgets.dart';
+import 'package:doctor_booking_app/src/pages/common/loader_hud.dart';
 import 'package:doctor_booking_app/src/service/base/base-auth.dart';
 import 'package:doctor_booking_app/src/themes/theme_provider.dart';
 import 'package:doctor_booking_app/src/utils/Colors.dart';

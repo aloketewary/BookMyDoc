@@ -1,12 +1,18 @@
-import 'package:doctor_booking_app/src/common/common_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctor_booking_app/src/database/notifier/doctors_notifier.dart';
+import 'package:doctor_booking_app/src/model/doctor-details.dart';
 import 'package:doctor_booking_app/src/model/router_data.dart';
+import 'package:doctor_booking_app/src/pages/common/common_widgets.dart';
 import 'package:doctor_booking_app/src/themes/theme_provider.dart';
 import 'package:doctor_booking_app/src/utils/Colors.dart';
-import 'package:doctor_booking_app/src/utils/custom_appbar.dart';
+import 'package:doctor_booking_app/src/utils/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'doctors_details.dart';
 
 class DoctorsList extends StatefulWidget {
   DoctorsList({this.routerData, this.prefs, this.onDoctorCardTap});
@@ -20,82 +26,83 @@ class DoctorsList extends StatefulWidget {
 }
 
 class _DoctorsListState extends State<DoctorsList> {
+  RouterData get routerData => widget.routerData;
+
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<ThemeProvider>(context);
+    final doctorsNotifier = Provider.of<DoctorsNotifier>(context);
     var isDark = themeChange.isDark(context);
     var themeData = Theme.of(context);
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: BmdAppBar(
-        title: Padding(
-            padding: const EdgeInsets.only(top: 12),
-            child: Text(
-              'Doctors',
-              style: Theme.of(context).textTheme.headline5,
-            )),
-        leading: null,
-      ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 5,
-        mainAxisSpacing: 5,
-        padding: EdgeInsets.all(10.0),
-        children: List.generate(
-          options.length,
-          (index) => GridOptions(
-            layout: options[index],
-          ),
+        appBar: TopBar(
+          title: 'Doctors',
+          leading: null,
         ),
-      ),
-    );
+        floatingActionButton: Align(
+          child: FloatingActionButton.extended(
+            onPressed: () => {},
+            label: Text(
+              'Add'.toUpperCase(),
+              style: themeData.textTheme.button.copyWith(color: Colors.black),
+            ),
+            icon: Icon(
+              MdiIcons.plus,
+            ),
+            backgroundColor: themeData.accentColor,
+            foregroundColor: Colors.black,
+          ),
+          alignment: Alignment(1, 0),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+        body: FutureBuilder(
+          future: doctorsNotifier.streamDoctors(routerData.loggedInUserId),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasData && snapshot.data.docs.isNotEmpty) {
+              var doctorsList = snapshot.data.docs
+                  .map((item) => DoctorDetails.fromMap(item.data(), item.id))
+                  .toList();
+              return GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                  padding: EdgeInsets.all(10.0),
+                  children: List.generate(
+                      doctorsList.length,
+                      (index) => GridOptions(
+                            doctorDetails: doctorsList[index],
+                            onTapCallback: (docs) => gotoDoctorDetailPage(docs),
+                          )));
+            } else if (snapshot.hasData && snapshot.data.docs.isEmpty) {
+              return Center(
+                child: CommonWidgets.unAvailableWidget(
+                    MdiIcons.doctor,
+                    'No Doctors Detail Found',
+                    isDark,
+                    themeData.accentColor,
+                    themeData.primaryColor),
+              );
+            }
+            return CommonWidgets.loadingIndicator(context, isDark,
+                title: 'Loading...');
+          },
+        ));
+  }
+
+  gotoDoctorDetailPage(DoctorDetails doctorsList) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => DoctorsDetails(doctorDetails: doctorsList,)
+    ));
   }
 }
 
-class GridLayout {
-  final String title;
-  final IconData icon;
-
-  GridLayout({this.title, this.icon});
-}
-
-List<GridLayout> options = [
-  GridLayout(title: 'Home', icon: Icons.home),
-  GridLayout(title: 'Email', icon: Icons.email),
-  GridLayout(title: 'Alarm', icon: Icons.access_alarm),
-  GridLayout(title: 'Wallet', icon: Icons.account_balance_wallet),
-  GridLayout(title: 'Backup', icon: Icons.backup),
-  GridLayout(title: 'Book', icon: Icons.book),
-  GridLayout(title: 'Camera', icon: Icons.camera_alt_rounded),
-  GridLayout(title: 'Person', icon: Icons.person),
-  GridLayout(title: 'Print', icon: Icons.print),
-  GridLayout(title: 'Phone', icon: Icons.phone),
-  GridLayout(title: 'Notes', icon: Icons.speaker_notes),
-  GridLayout(title: 'Music', icon: Icons.music_note_rounded),
-  GridLayout(title: 'Car', icon: Icons.directions_car),
-  GridLayout(title: 'Bicycle', icon: Icons.directions_bike),
-  GridLayout(title: 'Boat', icon: Icons.directions_boat),
-  GridLayout(title: 'Bus', icon: Icons.directions_bus),
-  GridLayout(title: 'Train', icon: Icons.directions_railway),
-  GridLayout(title: 'Walk', icon: Icons.directions_walk),
-  GridLayout(title: 'Contact', icon: Icons.contact_mail),
-  GridLayout(title: 'Duo', icon: Icons.duo),
-  GridLayout(title: 'Hour', icon: Icons.hourglass_bottom),
-  GridLayout(title: 'Mobile', icon: Icons.mobile_friendly),
-  GridLayout(title: 'Message', icon: Icons.message),
-  GridLayout(title: 'Key', icon: Icons.vpn_key),
-  GridLayout(title: 'Wifi', icon: Icons.wifi),
-  GridLayout(title: 'Bluetooth', icon: Icons.bluetooth),
-  GridLayout(title: 'Smile', icon: Icons.sentiment_satisfied),
-  GridLayout(title: 'QR', icon: Icons.qr_code),
-  GridLayout(title: 'ADD', icon: Icons.add_box),
-  GridLayout(title: 'Link', icon: Icons.link),
-];
-
 class GridOptions extends StatelessWidget {
-  final GridLayout layout;
+  GridOptions({this.doctorDetails, this.onTapCallback});
 
-  GridOptions({this.layout});
+  final DoctorDetails doctorDetails;
+  final Function onTapCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +117,7 @@ class GridOptions extends StatelessWidget {
           vertical: 4,
         ),
         child: Container(
-            height: 180,
+            height: 210,
             width: 140,
             margin: EdgeInsets.only(right: 10),
             child: Card(
@@ -172,7 +179,7 @@ class GridOptions extends StatelessWidget {
                             InkWell(
                               onTap: () {
                                 HapticFeedback.lightImpact();
-                                // onTapCallback();
+                                onTapCallback(doctorDetails);
                               },
                               splashColor: accentColor.withOpacity(0.3),
                               enableFeedback: true,
@@ -181,58 +188,79 @@ class GridOptions extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Padding(
                                           padding: EdgeInsets.only(top: 5),
                                           child: CircleAvatar(
-                                            child: Text('C',
+                                            child: Text(
+                                                doctorDetails.name.substring(
+                                                    0, 1),
                                                 style: textTheme.headline4
                                                     .copyWith(
-                                                    color: isDark
-                                                        ? primaryColor
-                                                        : Colors.white)),
-                                            backgroundColor: isDark ? accentColor : primaryColor,
+                                                        color: isDark
+                                                            ? primaryColor
+                                                            : Colors.white)),
+                                            backgroundColor: isDark
+                                                ? accentColor
+                                                : primaryColor,
                                             radius: 25,
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Text(
-                                      'Arindam Test',
-                                      style: textTheme.subtitle1.copyWith(
-                                          color: isDark ? accentColor.withOpacity(0.9) : primaryColor,
-                                          fontWeight: FontWeight.bold),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      'Test Address',
-                                      style: textTheme.subtitle2.copyWith(
-                                          color: isDark ? accentColor.withOpacity(0.9) : primaryColor,
-                                          fontWeight: FontWeight.bold),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                          MaterialStateProperty.resolveWith(
-                                                  (states) => isDark
-                                                  ? primaryColor
-                                                  : accentColor.withOpacity(0.9))),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 8),
                                       child: Text(
-                                        'DELETE',
-                                        style:
-                                        Theme.of(context).textTheme.button,
+                                        doctorDetails.name,
+                                        style: textTheme.subtitle1.copyWith(
+                                            color: isDark
+                                                ? accentColor.withOpacity(0.9)
+                                                : primaryColor,
+                                            fontWeight: FontWeight.bold),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
+                                    ),
+                                    Text(
+                                      doctorDetails.speciality,
+                                      style: textTheme.subtitle2.copyWith(
+                                          color: isDark
+                                              ? accentColor.withOpacity(0.9)
+                                              : primaryColor,
+                                          fontWeight: FontWeight.bold),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: 5),
+                                          child: Icon(
+                                            Icons.access_time,
+                                            size: 18,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${doctorDetails.timingStart}-${doctorDetails.timingEnd}',
+                                          style: textTheme.subtitle2.copyWith(
+                                              color: isDark
+                                                  ? accentColor.withOpacity(0.9)
+                                                  : primaryColor,
+                                              fontWeight: FontWeight.bold),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
                                     )
+
                                     // CircularPercentIndicator(
                                     //   radius: 80.0,
                                     //   lineWidth: 8.0,

@@ -4,6 +4,7 @@ class FireStoreApi {
   FireStoreApi(String collectionPath) {
     _collectionReference = _fireStore.collection(collectionPath);
   }
+
   final _fireStore = FirebaseFirestore.instance;
   CollectionReference _collectionReference;
 
@@ -51,9 +52,7 @@ class FireStoreApi {
   }
 
   Future<QuerySnapshot> getSingleUserCollection(String uid) {
-    return _collectionReference
-        .where('uid', isEqualTo: uid)
-        .get();
+    return _collectionReference.where('uid', isEqualTo: uid).get();
   }
 
   Stream<QuerySnapshot> streamAllPendingEventCollection(String type) {
@@ -71,9 +70,7 @@ class FireStoreApi {
   }
 
   Future<QuerySnapshot> futureRequestsForCurrentUser(String uid) {
-    return _collectionReference
-        .where('created_by_id', isEqualTo: uid)
-        .get();
+    return _collectionReference.where('created_by_id', isEqualTo: uid).get();
   }
 
   Stream<DocumentSnapshot> streamCurrentBloodRequest(String id) {
@@ -103,5 +100,9 @@ class FireStoreApi {
 
   Future<QuerySnapshot> fetchDonationHistoryWhereUserId(String userId) {
     return _collectionReference.where('donor_id', isEqualTo: userId).get();
+  }
+
+  Future<QuerySnapshot> streamDoctorCollection(String shopId)  {
+    return _collectionReference.where('dispensary_id', isEqualTo: shopId).get();
   }
 }

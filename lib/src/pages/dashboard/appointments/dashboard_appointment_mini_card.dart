@@ -1,4 +1,4 @@
-import 'package:doctor_booking_app/src/common/common_widgets.dart';
+import 'package:doctor_booking_app/src/pages/common/common_widgets.dart';
 import 'package:doctor_booking_app/src/themes/theme_provider.dart';
 import 'package:doctor_booking_app/src/utils/Colors.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +108,9 @@ class DashboardAppointmentMiniCard extends StatelessWidget {
                                                         color: isDark
                                                             ? primaryColor
                                                             : Colors.white)),
-                                            backgroundColor: isDark ? accentColor : primaryColor,
+                                            backgroundColor: isDark
+                                                ? accentColor
+                                                : primaryColor,
                                             radius: 25,
                                           ),
                                         ),
@@ -117,14 +119,18 @@ class DashboardAppointmentMiniCard extends StatelessWidget {
                                     Text(
                                       'Arindam Test',
                                       style: textTheme.subtitle1.copyWith(
-                                          color: isDark ? accentColor.withOpacity(0.9) : primaryColor,
+                                          color: isDark
+                                              ? accentColor.withOpacity(0.9)
+                                              : primaryColor,
                                           fontWeight: FontWeight.bold),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Text(
                                       'Test Address',
                                       style: textTheme.subtitle2.copyWith(
-                                          color: isDark ? accentColor.withOpacity(0.9) : primaryColor,
+                                          color: isDark
+                                              ? accentColor.withOpacity(0.9)
+                                              : primaryColor,
                                           fontWeight: FontWeight.bold),
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -135,7 +141,8 @@ class DashboardAppointmentMiniCard extends StatelessWidget {
                                               MaterialStateProperty.resolveWith(
                                                   (states) => isDark
                                                       ? primaryColor
-                                                      : accentColor.withOpacity(0.9))),
+                                                      : accentColor
+                                                          .withOpacity(0.9))),
                                       child: Text(
                                         'DELETE',
                                         style:

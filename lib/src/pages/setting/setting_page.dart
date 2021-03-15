@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'account_setting.dart';
+
 class SettingPage extends StatefulWidget {
   SettingPage({this.routerData, this.prefs, this.onDoctorCardTap});
 
@@ -80,7 +82,8 @@ class _SettingPageState extends State<SettingPage>
             Container(
               // decoration: BoxDecoration(color: themeData.primaryColor),
               child: TabBar(
-                  labelColor: isDark ? themeData.accentColor : themeData.primaryColor,
+                  labelColor:
+                      isDark ? themeData.accentColor : themeData.primaryColor,
                   labelStyle: themeData.textTheme.subtitle1,
                   controller: _tabController,
                   indicatorColor: themeData.accentColor,
@@ -88,14 +91,16 @@ class _SettingPageState extends State<SettingPage>
                   tabs: tabList),
             ),
             Container(
-              height: size.height,
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              height: size.height / 1.4,
               width: size.width,
               child: TabBarView(
                   physics: NeverScrollableScrollPhysics(),
                   controller: _tabController,
                   children: [
-                    Container(
-                      child: Text('tab.text'),
+                    AccountSetting(
+                      routerData: routerData,
+                      prefs: widget.prefs,
                     ),
                     Container(
                       child: Text('tab.text'),

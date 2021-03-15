@@ -1,6 +1,1 @@
-enum AuthStatus {
-  notDetermined,
-  notLoggedIn,
-  loggedIn,
-  firstTimeLoggedIn
-}
+enum AuthStatus { notDetermined, notLoggedIn, loggedIn, firstTimeLoggedIn }

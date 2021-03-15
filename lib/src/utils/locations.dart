@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:http/http.dart' as http;
 import 'package:json_annotation/json_annotation.dart';
 
@@ -13,6 +14,7 @@ class LatLng {
   });
 
   factory LatLng.fromJson(Map<String, dynamic> json) => _$LatLngFromJson(json);
+
   Map<String, dynamic> toJson() => _$LatLngToJson(this);
 
   final double lat;
@@ -29,6 +31,7 @@ class Region {
   });
 
   factory Region.fromJson(Map<String, dynamic> json) => _$RegionFromJson(json);
+
   Map<String, dynamic> toJson() => _$RegionToJson(this);
 
   final LatLng coords;
@@ -51,6 +54,7 @@ class Office {
   });
 
   factory Office.fromJson(Map<String, dynamic> json) => _$OfficeFromJson(json);
+
   Map<String, dynamic> toJson() => _$OfficeToJson(this);
 
   final String address;
@@ -72,6 +76,7 @@ class Locations {
 
   factory Locations.fromJson(Map<String, dynamic> json) =>
       _$LocationsFromJson(json);
+
   Map<String, dynamic> toJson() => _$LocationsToJson(this);
 
   final List<Office> offices;
@@ -88,7 +93,7 @@ Future<Locations> getGoogleOffices() async {
   } else {
     throw HttpException(
         'Unexpected status code ${response.statusCode}:'
-            ' ${response.reasonPhrase}',
+        ' ${response.reasonPhrase}',
         uri: Uri.parse(googleLocationsURL));
   }
 }

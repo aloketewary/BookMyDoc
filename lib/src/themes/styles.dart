@@ -1,5 +1,4 @@
 import 'package:doctor_booking_app/src/themes/theme_enum.dart';
-import 'package:doctor_booking_app/src/utils/Colors.dart';
 import 'package:flutter/material.dart';
 
 abstract class Styles {
@@ -35,6 +34,7 @@ abstract class Styles {
   static final BLUE_DARK = Color(0XFF131314);
   static final BOTTOM_BAR = Color(0XFFB5C4CC);
   static final RED_DARKER = Color(0XFF470102);
+
   /* Custom theme */
   static const Color orange = Color(0xFFFAAB1A);
   static const Color notWhite = Color(0xFFEDF0F2);

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doctor_booking_app/src/common/common_widgets.dart';
 import 'package:doctor_booking_app/src/database/notifier/users_notifier.dart';
 import 'package:doctor_booking_app/src/model/router_data.dart';
 import 'package:doctor_booking_app/src/model/user-details.dart';
+import 'package:doctor_booking_app/src/pages/common/common_widgets.dart';
 import 'package:doctor_booking_app/src/pages/home/home.dart';
 import 'package:doctor_booking_app/src/pages/login/getting_started.dart';
 import 'package:doctor_booking_app/src/pages/login/login_screen.dart';
@@ -112,7 +112,7 @@ class _DecisionMakerState extends State<DecisionMaker>
     var accentColor = Theme.of(context).accentColor;
     final themeChange = Provider.of<ThemeProvider>(context);
     var isDark = themeChange.isDark(context);
-    var routerData = RouterData(userDetails: _userDetails);
+    var routerData = RouterData(userDetails: _userDetails, loggedInUserId: _userId);
     switch (authStatus) {
       case AuthStatus.notLoggedIn:
         return SharedPreferencesHelper.getOnBoardingStatus(prefs)
@@ -153,7 +153,7 @@ class _DecisionMakerState extends State<DecisionMaker>
     final _usersNotifier = Provider.of<UsersNotifier>(context);
     final themeChange = Provider.of<ThemeProvider>(context);
     var isDark = themeChange.isDark(context);
-    var routerData = RouterData(userDetails: _userDetails);
+    var routerData = RouterData(userDetails: _userDetails, loggedInUserId: _userId);
     return FutureBuilder(
         future: _usersNotifier.getSingleUserCollection(_userId),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

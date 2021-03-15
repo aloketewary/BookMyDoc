@@ -164,16 +164,19 @@ class _AdminDashboardState extends State<AdminDashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [DashboardGlanceCard(
-              icon: MdiIcons.stethoscope,
-              subTitleText: 'Doctors',
-              titleText: '32',
-              onCardTap: widget.onDoctorCardTap,
-            ), DashboardGlanceCard(
-              icon: MdiIcons.accountDetails,
-              subTitleText: 'Users',
-              titleText: '25',
-            )],
+            children: [
+              DashboardGlanceCard(
+                icon: MdiIcons.stethoscope,
+                subTitleText: 'Doctors',
+                titleText: '32',
+                onCardTap: widget.onDoctorCardTap,
+              ),
+              DashboardGlanceCard(
+                icon: MdiIcons.accountDetails,
+                subTitleText: 'Users',
+                titleText: '25',
+              )
+            ],
           ),
         ],
       ),
@@ -181,7 +184,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
   }
 }
 
-Container _buildSectionName(BuildContext context, {String titleText = '', String subTitleText = ''}) {
+Container _buildSectionName(BuildContext context,
+    {String titleText = '', String subTitleText = ''}) {
   return Container(
       child: Column(children: [
     Row(
