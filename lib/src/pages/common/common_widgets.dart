@@ -362,30 +362,71 @@ class CommonWidgets {
     }
   }
 
-// Future<Null> _selectTime(BuildContext context) async {
-//   final picked = await showTimePicker(
-//     context: context,
-//     initialTime: selectedTime,
-//   );
-//   if (picked != null) {
-//     setState(() {
-//       selectedTime = picked;
-//       _hour = selectedTime.hour.toString();
-//       _minute = selectedTime.minute.toString();
-//       _time = _hour + ' : ' + _minute;
-//       _timeController.text = _time;
-//       _timeController.text = formatDate(
-//           DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
-//           [hh, ':', nn, ' ', am]).toString();
-//     });
-//   }
-// }
+static Future<Null> selectTime(BuildContext context,
+    TextEditingController _timeController, Function pickedValue,
+    {TimeOfDay selectedTime , bool isDark, ThemeData themeData}) async {
+  final picked = await showTimePicker(
+    context: context,
+    initialTime: selectedTime,
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: isDark
+              ? ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: themeData.primaryColor,
+              onPrimary: Colors.white,
+              surface: themeData.primaryColorDark,
+              onSurface: themeData.accentColor,
+            ),
+            dialogBackgroundColor: themeData.primaryColorLight,
+          )
+              : ThemeData.light().copyWith(
+            colorScheme: ColorScheme.light(
+              primary: themeData.primaryColor,
+              onPrimary: Colors.white,
+              surface: themeData.primaryColorDark,
+              onSurface: Styles.nearlyBlack,
+            ),
+            dialogBackgroundColor: Styles.nearlyWhite,
+          ),
+          child: child,
+        );
+      });
+  if (picked != null) {
+        pickedValue(picked);
+  }
+}
 
   static Widget dateInputFormField(TextEditingController tECtrl,
       String labelText, Function validatorFunc, bool isDark, Function onTapped,
       {IconData prefixIcon,
       TextInputType keyboardType = TextInputType.text,
       TextCapitalization textCapitalization = TextCapitalization.sentences}) {
+    return Padding(
+        padding: EdgeInsets.only(top: 12),
+        child: TextFormField(
+          controller: tECtrl,
+          onTap: onTapped,
+          focusNode: AlwaysDisabledFocusNode(),
+          decoration: InputDecoration(
+            labelText: labelText,
+            prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: getBorderColor(isDark)),
+            ),
+          ),
+          keyboardType: keyboardType,
+          textCapitalization: textCapitalization,
+          validator: validatorFunc,
+        ));
+  }
+
+  static Widget timeInputFormField(TextEditingController tECtrl,
+      String labelText, Function validatorFunc, bool isDark, Function onTapped,
+      {IconData prefixIcon,
+        TextInputType keyboardType = TextInputType.text,
+        TextCapitalization textCapitalization = TextCapitalization.sentences}) {
     return Padding(
         padding: EdgeInsets.only(top: 12),
         child: TextFormField(

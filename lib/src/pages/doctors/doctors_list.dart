@@ -3,6 +3,7 @@ import 'package:doctor_booking_app/src/database/notifier/doctors_notifier.dart';
 import 'package:doctor_booking_app/src/model/doctor-details.dart';
 import 'package:doctor_booking_app/src/model/router_data.dart';
 import 'package:doctor_booking_app/src/pages/common/common_widgets.dart';
+import 'package:doctor_booking_app/src/pages/doctors/manage_doctor.dart';
 import 'package:doctor_booking_app/src/themes/theme_provider.dart';
 import 'package:doctor_booking_app/src/utils/Colors.dart';
 import 'package:doctor_booking_app/src/utils/top_bar.dart';
@@ -42,7 +43,11 @@ class _DoctorsListState extends State<DoctorsList> {
         ),
         floatingActionButton: Align(
           child: FloatingActionButton.extended(
-            onPressed: () => {},
+            onPressed: () => {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ManageDoctor(doctorDetails: null, routerData: routerData,)
+            ))
+            },
             label: Text(
               'Add'.toUpperCase(),
               style: themeData.textTheme.button.copyWith(color: Colors.black),
@@ -91,7 +96,7 @@ class _DoctorsListState extends State<DoctorsList> {
         ));
   }
 
-  gotoDoctorDetailPage(DoctorDetails doctorsList) {
+  void gotoDoctorDetailPage(DoctorDetails doctorsList) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => DoctorsDetails(doctorDetails: doctorsList,)
     ));
