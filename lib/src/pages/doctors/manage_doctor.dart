@@ -1,3 +1,4 @@
+import 'package:doctor_booking_app/src/database/notifier/doctors_notifier.dart';
 import 'package:doctor_booking_app/src/database/notifier/users_notifier.dart';
 import 'package:doctor_booking_app/src/enums/gender_enum.dart';
 import 'package:doctor_booking_app/src/model/doctor-details.dart';
@@ -165,8 +166,7 @@ class _ManageDoctorState extends State<ManageDoctor> {
                       _psFromCtrl,
                       'Practise started from',
                           (val) => emptyValidator(val, 'Practise started from'),
-                      isDark,
-                          () =>
+                      isDark, () =>
                           CommonWidgets.selectDate(
                               context, _dobCtrl, (val) => pickedValue(val),
                               selectedDate: _selectedDate,
@@ -228,8 +228,8 @@ class _ManageDoctorState extends State<ManageDoctor> {
         var _hour = _selectedTime.hour.toString();
         var _minute = _selectedTime.minute.toString();
         var _time = _hour + ' : ' + _minute;
-      ctrl.text = _time;
-      // ctrl.text = Date(
+        ctrl.text = _time;
+      // ctrl.text = DateFormat(
       //       DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
       //       [hh, ':', nn, ' ', am]).toString();
     });
@@ -248,9 +248,9 @@ class _ManageDoctorState extends State<ManageDoctor> {
     }
   }
 
-  void _formSubmit(UsersNotifier _usersNotifier) {
+  void _formSubmit(DoctorsNotifier _doctorsNotifier) {
     _formKey.currentState.save();
-    var _user = DoctorDetails(
+    var _doctorDetails = DoctorDetails(
       id: '',
       dob: DateFormat('dd-MM-yyyy').parse(_dobCtrl.text),
       email: _emailCtrl.text.trim(),
@@ -266,15 +266,16 @@ class _ManageDoctorState extends State<ManageDoctor> {
       timingEnd: '',
       timingStart: '',
     );
-    // _usersNotifier.createNewUser(widget.userId, _user).then((userDetail) {
-    //   if (userDetail != null) {
-    //     setState(() => isFormSubmissionStarted = !isFormSubmissionStarted);
-    //     // Fluttertoast.showToast(msg: 'Welcome ' + _teNameCtrl.text);
-    //     SharedPreferencesHelper.setLoggedUserData(_user, widget.prefs);
-    //     widget.checkFirstTimeUserCallback();
-    //   }
-    // }).catchError((error) {
-    //   setState(() => isFormSubmissionStarted = false);
-    // });
+    _doctorsNotifier.createNewDoctors('', _doctorDetails)
+    .then((docDetails){
+      if (docDetails != null) {
+            setState(() => isFormSubmissionStarted = !isFormSubmissionStarted);
+            // Fluttertoast.showToast(msg: 'Welcome ' + _teNameCtrl.text);
+            // SharedPreferencesHelper.setLoggedUserData(_user, widget.prefs);
+            // widget.checkFirstTimeUserCallback();
+          }
+      }).catchError((error) {
+      setState(() => isFormSubmissionStarted = false);
+      });
   }
 }

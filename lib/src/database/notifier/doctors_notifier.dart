@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor_booking_app/src/database/doctors_data_api.dart';
 import 'package:doctor_booking_app/src/database/users_data_api.dart';
+import 'package:doctor_booking_app/src/model/doctor-details.dart';
 import 'package:doctor_booking_app/src/model/user-details.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +16,10 @@ class DoctorsNotifier extends ChangeNotifier {
     return _api.streamDoctorCollection(shopId);
   }
 
-  Future<UserDetails> createNewDoctors(String id, UserDetails user) async {
-    Map data = user.toJson();
+  Future<DoctorDetails> createNewDoctors(String id, DoctorDetails doctorDetails) async {
+    Map data = doctorDetails.toJson();
     await _api.addUsersDocument(id, data);
-    return UserDetails.fromMap(data, id);
+    return DoctorDetails.fromMap(data, id);
   }
 
   Future<QuerySnapshot> streamUsersByBloodGroup(String city) {
